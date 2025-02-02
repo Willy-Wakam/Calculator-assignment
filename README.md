@@ -25,7 +25,7 @@ The calculator supports the following operations:
 ## How to Use
 
 1. **Open the Calculator**  
-   Follow this link: 
+   Follow this link: https://willy-wakam.github.io/Calculator-assignment/
 
 2. **Perform Calculations**  
    - Click the buttons on the calculator interface to input numbers and operations.
@@ -48,5 +48,5 @@ The calculator supports the following operations:
 
 The project consists of the following files:
 - `index.html`: The main HTML file containing the calculator structure.
-- `styles.css`: The CSS file for styling the calculator interface.
-- `script.js`: The JavaScript file containing the logic for the calculator operations.
+- `calculator.css`: The CSS file for styling the calculator interface.
+- `calculator.js`: The JavaScript file containing the logic for the calculator operations.
