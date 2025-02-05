@@ -4,10 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./calculator.css">
-    <script src="./calculator.js"></script>
+    <link rel="icon" href="./logo-img.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="./calculator.js" defer></script>
     <title>Calculator</title>
 </head>
 <body>
-    
+    <main>
+        <div class="calculator__display">
+            <div class="display__operations">0</div>
+            <div class="display__result"></div>
+        </div>
+        <div class="container">
+            <button id="clear">AC</button>
+            <button class="key--operator add" data-action="divide">÷</button>
+            <button class="key--operator multiply" data-action="multiply">&times;</button>
+            <button class="key--operator" id="delete"><i class="fas fa-backspace"></i></button>
+            <button class="btn">7</button>
+            <button class="btn">8</button>
+            <button class="btn">9</button>
+            <button class="key--operator" id="substract" data-action="add">+</button>
+            <button class="btn">4</button>
+            <button class="btn">5</button>
+            <button class="btn">6</button>
+            <button class="key--operator" id="divide" data-action="subtract">-</button>
+            <button class="btn">1</button>
+            <button class="btn">2</button>
+            <button class="btn">3</button>
+            <button class="key--operator" id="equal" data-action="calculate">=</button>
+            <button class="btn" id="btn-0">0</button>
+            <button class="btn">.</button>
+        </div>
+    </main>
 </body>
 </html>
