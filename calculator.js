@@ -11,16 +11,24 @@ const BTN__NODELIST = CONTAINER.querySelectorAll('.btn');
 const OPERATORS = CONTAINER.querySelectorAll('.key--operator');
 const BTN__DELETE = CONTAINER.querySelector('#delete');
 const BTN__CLEAR = CONTAINER.querySelector('#clear');
+const BTN__DECIMAL = CONTAINER.querySelector('#btn-dot');
 
     
 BTN__DELETE.addEventListener('click', function() {
     if(result.length > 0){
-        let a = result.slice(result.length - 1, -1);
-        result = a;
-        if(result.length === 0){
-            DISPLAY__OPERATIONS.textContent = '0';
+        const SAVE = result.slice(0, -1);
+        result = SAVE;   
+        DISPLAY__OPERATIONS.textContent = SAVE;
+        if(result.includes('.')){
+            BTN__DECIMAL.disabled = true;
         }
-        else DISPLAY__OPERATIONS.textContent = result;
+        else {
+            BTN__DECIMAL.disabled = false;
+        }  
+    }
+    if (result.length === 0){
+        DISPLAY__OPERATIONS.textContent = '0';
+        result = '';
     }
 });
 
@@ -43,6 +51,12 @@ CONTAINER.addEventListener('click', function (e) {
                 result += BTN__NODELIST[i].textContent; 
                 console.log(result);
                 DISPLAY__OPERATIONS.textContent += BTN__NODELIST[i].textContent;
+            }
+            if(result.includes('.')){
+                BTN__DECIMAL.disabled = true;
+            }
+            else {
+                BTN__DECIMAL.disabled = false;
             }
         }
     }
