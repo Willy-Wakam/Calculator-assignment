@@ -11,23 +11,24 @@
 </head>
 <body>
     <main>
+       <div class="calc">
+        <div class="error">This operation is not allowed</div>
         <div class="calculator__display">
-            <div class="display__operations">0</div>
-            <div class="display__result"></div>
+            <div class="display__result">0</div>
         </div>
         <div class="container">
             <button id="clear">AC</button>
-            <button class="key--operator add" data-action="divide">÷</button>
+            <button class="key--operator divide" data-action="divide">÷</button>
             <button class="key--operator multiply" data-action="multiply">&times;</button>
             <button class="key--operator" id="delete"><i class="fas fa-backspace"></i></button>
             <button class="btn">7</button>
             <button class="btn">8</button>
             <button class="btn">9</button>
-            <button class="key--operator" id="substract" data-action="add">+</button>
+            <button class="key--operator" id="add" data-action="add">+</button>
             <button class="btn">4</button>
             <button class="btn">5</button>
             <button class="btn">6</button>
-            <button class="key--operator" id="divide" data-action="subtract">-</button>
+            <button class="key--operator" id="substract" data-action="subtract">-</button>
             <button class="btn">1</button>
             <button class="btn">2</button>
             <button class="btn">3</button>
@@ -35,6 +36,7 @@
             <button class="btn" id="btn-0">0</button>
             <button class="btn" id="btn-dot">.</button>
         </div>
+       </div>
     </main>
 </body>
 </html>
