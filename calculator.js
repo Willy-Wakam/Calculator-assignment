@@ -156,7 +156,6 @@ CONTAINER.addEventListener('click', function (e) {
             }
             else if(operator === ''){ 
                 firstOperand += BTN__NODELIST[i].textContent;
-                console.log(firstOperand);
                 DISPLAY__RESULT.textContent = firstOperand;
             }
             if(operator !== ''){
@@ -171,12 +170,9 @@ CONTAINER.addEventListener('click', function (e) {
                 DISPLAY__RESULT.textContent = secondOperand;
                }
             }
-            if(firstOperand.includes('.') && secondOperand.includes('.')){
+            if(firstOperand.includes('.') && secondOperand === '' || firstOperand.includes('.') && secondOperand.includes('.')) 
                 BTN__DECIMAL.disabled = true;
-            }
-            else {
-                BTN__DECIMAL.disabled = false;
-            }
+            else BTN__DECIMAL.disabled = false; 
         }
     }
 
