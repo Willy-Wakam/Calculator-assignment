@@ -38,10 +38,10 @@ The calculator supports the following operations:
    - Navigate to the **Console** tab.
    - Use the following functions to test the operations:
      ```javascript
-     operate('5', '3', '+');       // Output: 8
-     operate('10', '4', '-'); // Output: 6
-     operate('7', '2', '*');  // Output: 14
-     operate('20', '5', '÷');   // Output: 4
+     operate(5, 3, '+');       // Output: 8
+     operate(10, 4, '-'); // Output: 6
+     operate(7, 2, '*');  // Output: 14
+     operate(20, 5, '÷');   // Output: 4
      ```
 
 ## Project Structure
