@@ -10,6 +10,7 @@ const BTN__DELETE = CONTAINER.querySelector('#delete');
 const BTN__CLEAR = CONTAINER.querySelector('#clear');
 const BTN__DECIMAL = CONTAINER.querySelector('#btn-dot');
 
+
 let firstOperand = '';
 let secondOperand = '';
 let operator = '';
@@ -19,7 +20,6 @@ let pressedEqual = false;
 BTN__DELETE.addEventListener('click', function() {
     if(DISPLAY__RESULT.textContent.length > 0){
         const SAVE = DISPLAY__RESULT.textContent.slice(0, -1);
-        console.log(SAVE);
         DISPLAY__RESULT.textContent = SAVE;
         if(operator === '') firstOperand = SAVE;
         else secondOperand = SAVE;
@@ -134,8 +134,8 @@ function operate (firstOperand, secondOperand, operator){
             return eval(firstOperand * secondOperand);
         case '÷':
             if(secondOperand === 0) return 'Error';
-            const RESULT = `${eval(firstOperand / secondOperand)}`
-            if(RESULT.length > 9) return Math.round(RESULT);
+            const RESULT = +eval(firstOperand / secondOperand).toFixed(9);
+            if(RESULT.length > 9) return RESULT;
             return RESULT;
     }   
 }
@@ -161,12 +161,10 @@ CONTAINER.addEventListener('click', function (e) {
             if(operator !== ''){
                 if(secondOperand.startsWith('0')){
                     secondOperand = BTN__NODELIST[i].textContent;
-                    console.log(secondOperand);
                     DISPLAY__RESULT.textContent = secondOperand;
                 }
                else {
                 secondOperand += BTN__NODELIST[i].textContent;
-                console.log(secondOperand);
                 DISPLAY__RESULT.textContent = secondOperand;
                }
             }
@@ -177,16 +175,19 @@ CONTAINER.addEventListener('click', function (e) {
     }
 
     for(let i = 0; i < OPERATORS.length; i++) {
-        if(firstOperand !== ''){
+        if(secondOperand === '0' && secondOperand.length === 1  && operator === '÷'){
+            document.getElementById('error-message').style.display = 'block';
+            setTimeout(() => {document.getElementById('error-message').style.display = 'none';}, 3000);
+            
+        }
+        else if(firstOperand !== ''){
             if(e.target === OPERATORS[i]) {
                 if(OPERATORS[i].textContent !== '=' && OPERATORS[i].textContent !== ''){
-                    if(operator === '' && secondOperand ===''){
-                        console.log('here')
+                    if(operator === '' && secondOperand === ''){
                         pressedEqual = false;
                         operator = OPERATORS[i].textContent;
                     }
                     else{
-                        console.log('here')
                         pressedEqual = false;
                         DISPLAY__RESULT.textContent = `${operate(+firstOperand, +secondOperand, operator)}`;
                         firstOperand = `${operate(+firstOperand, +secondOperand, operator)}`;
@@ -196,9 +197,6 @@ CONTAINER.addEventListener('click', function (e) {
                     }
                 }
                 else if(OPERATORS[i].textContent === '='){
-                    if(secondOperand === '0' && operator === '÷'){
-                        CONTAINER.toggle;
-                    }
                     if(operator === '' && firstOperand !== ''){
                         DISPLAY__RESULT.textContent = firstOperand;
                         pressedEqual = true;
