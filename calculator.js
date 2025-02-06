@@ -137,6 +137,8 @@ function operate (firstOperand, secondOperand, operator){
             const RESULT = +eval(firstOperand / secondOperand).toFixed(9);
             if(RESULT.length > 9) return RESULT;
             return RESULT;
+        default:
+            return eval(firstOperand * secondOperand);
     }   
 }
 
