@@ -19,17 +19,28 @@ main .container{
 main .calculator__display{
     width: 400px;
     text-align: right;
-    height: 80px;
+    height: 120px;
     line-height: 50px;
     margin: 0 auto;
 }
 main .calculator__display .display__result{
     height: 80px;
     align-items: center;
-    font-size: 3.5em;
+    font-size: 3.2em;
     display: flex;
     flex-direction: row-reverse;
     padding: 0 10px;
+    overflow: auto;
+}
+
+main .calculator__display .display__operations{
+    height: 40px;
+    align-items: center;
+    font-size: 2.5em;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 10px;
+    overflow: hidden;
 }
 
 main .container #btn-0{
@@ -44,6 +55,12 @@ main #error-message{
     padding: 0 10px;
     font-weight: bold;
     display: none
+}
+
+.pressed{
+    font-weight: bold;
+    color: #fff;
+    background-color: black !important;
 }
 
 main .container #equal{
