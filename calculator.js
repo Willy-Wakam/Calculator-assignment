@@ -67,11 +67,13 @@ function operate (firstOperand, secondOperand, operator){
             };
             return RESULT_SUB;
         case '×' || '*':
-            const RESULT_MUL = `${(+firstOperand * +secondOperand)}`;
+            console.log('here');
+            const RESULT_MUL = `${(firstOperand * secondOperand)}`;
             if(RESULT_MUL.length > 10) return Number((+RESULT_MUL).toFixed(10));
             return RESULT_MUL;
         case '÷' || '/':
-            const RESULT = `${(+firstOperand / +secondOperand)}`;
+            console.log('here');
+            const RESULT = `${(firstOperand / secondOperand)}`;
             if(RESULT.length > 10) return Number((+RESULT).toFixed(10));
             return RESULT;
     }   
@@ -125,6 +127,7 @@ function addSelectedOperatorBeforeCallingOperate(index){
         if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
         if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
         firstOperand = `${operate(+firstOperand, +secondOperand, operator)}`;
+        DISPLAY__OPERATIONS.textContent = firstOperand
         secondOperand = '';
         operator = OPERATORS[index].textContent;
         DISPLAY__OPERATIONS.textContent += operator; 
@@ -141,6 +144,7 @@ function callOperateWhenPressedOnEqualBtn(){
         if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
         if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
         firstOperand = DISPLAY__RESULT.textContent;
+        DISPLAY__OPERATIONS.textContent = DISPLAY__RESULT.textContent;
         secondOperand = '';
         operator = '';
         pressedEqual = true;
@@ -179,19 +183,53 @@ CONTAINER.addEventListener('click', function (e) {
 });
 
 document.addEventListener('keydown', (event) => {
+    const OPERATORS = ['+', '-', '/', '*'];
     const key = event.key;
-    let condition = (DISPLAY__OPERATIONS.textContent.includes('+') || DISPLAY__OPERATIONS.textContent.includes('-') 
-    || DISPLAY__OPERATIONS.textContent.includes('*') || DISPLAY__OPERATIONS.textContent.includes('/'));
-    let choosenOperator;
 
     // Allow only numbers, operators, Enter, Backspace, and Escape
     if (/[\d+\-*/]/.test(key)) {
         DISPLAY__OPERATIONS.textContent += key
-        if (!condition) firstOperand = DISPLAY__OPERATIONS.textContent;
+        if (key === '+' || key === '-' || key === '/' 
+            || key === '*') {
+                firstOperand = DISPLAY__OPERATIONS.textContent.slice(0, DISPLAY__OPERATIONS.textContent.length - 1);
+                operator = key;
+            }
+        else {
+           if(operator !== '')
+            secondOperand = DISPLAY__OPERATIONS.textContent.slice(DISPLAY__OPERATIONS.textContent.indexOf(operator) + 1);
+        }
     } else if (key === "Enter") {
-        callOperateWhenPressedOnEqualBtn();
+        if(operator === '/' || operator === '*'){
+            if(operator === '*'){
+                const RESULT_MUL = `${(firstOperand * secondOperand)}`;
+                DISPLAY__RESULT.textContent = RESULT_MUL;
+                DISPLAY__OPERATIONS.textContent = RESULT_MUL;
+            }
+            else {
+                const RESULT_DIV = `${(firstOperand / secondOperand)}`;
+                DISPLAY__RESULT.textContent = RESULT_DIV;
+                DISPLAY__OPERATIONS.textContent = RESULT_DIV;
+            }
+        }
+        else callOperateWhenPressedOnEqualBtn();
     } else if (key === "Backspace") {
-        DISPLAY__OPERATIONS.textContent = DISPLAY__OPERATIONS.textContent.slice(0, -1);
+        const SAVE = DISPLAY__OPERATIONS.textContent.slice(0, -1);
+        DISPLAY__OPERATIONS.textContent = SAVE;
+        if(!(key === '+' || key === '-' || key === '/' 
+            || key === '*')) firstOperand = SAVE;
+        else {
+            console.log('here');
+            let op;
+            let i;
+            OPERATORS.map((operand, index) =>{
+                if(DISPLAY__OPERATIONS.textContent.includes(operand)) {
+                    op = operand;
+                    i = index;
+                }
+            })
+            operator = op;
+            secondOperand = DISPLAY__OPERATIONS.textContent.slice(firstOperand.length + 1);
+        }
     } else if (key === "Escape") {
         DISPLAY__RESULT.textContent = '0';
         DISPLAY__OPERATIONS.textContent = '0';  
