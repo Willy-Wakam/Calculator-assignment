@@ -79,34 +79,38 @@ function operate (firstOperand, secondOperand, operator){
     }   
 }
 
-function fillfirstOperand(index){
-    if(firstOperand.startsWith('0') && firstOperand.length === 1){
-        firstOperand = BTN__NODELIST[index].textContent;
-        DISPLAY__OPERATIONS.textContent = firstOperand
-    }
-    if(pressedEqual && firstOperand.length < 10) {
-        firstOperand = BTN__NODELIST[index].textContent;
-        DISPLAY__OPERATIONS.textContent = firstOperand;
+
+function fillfirstOperand(index) {
+    let value = BTN__NODELIST[index].textContent;
+
+    if (firstOperand === "0" && value !== ".") {
+        firstOperand = value; 
+    } else if (pressedEqual) {
+        firstOperand = value;
         pressedEqual = false;
+    } else if (operator === "" && firstOperand.length < 10) {
+        firstOperand += value;
     }
-    else if(operator === '' && firstOperand.length < 10){ 
-        if(BTN__NODELIST[index].textContent === '.' && firstOperand.length === 0) firstOperand = '0.'
-        else firstOperand += BTN__NODELIST[index].textContent;
-        DISPLAY__OPERATIONS.textContent = firstOperand;
-    }
+
+    // Remove leading 
+    firstOperand = firstOperand.replace(/^0+(?=\d)/, "");
+    DISPLAY__OPERATIONS.textContent = firstOperand;
 }
 
-function fillSecondOperand(index){
-    if(operator !== '' && secondOperand.length < 10){
-        if(secondOperand.startsWith('0')){
-            secondOperand = BTN__NODELIST[index].textContent;
-            DISPLAY__OPERATIONS.textContent += BTN__NODELIST[index].textContent;
+function fillSecondOperand(index) {
+    let value = BTN__NODELIST[index].textContent;
+
+    if (operator !== "" && secondOperand.length < 10) {
+        if (secondOperand === "0" && value !== ".") {
+            secondOperand = value; 
+        } else {
+            secondOperand += value;
         }
-       else {
-        secondOperand += BTN__NODELIST[index].textContent;
-        DISPLAY__OPERATIONS.textContent += BTN__NODELIST[index].textContent;
-       }
     }
+
+    // Remove leading
+    secondOperand = secondOperand.replace(/^0+(?=\d)/, "");
+    DISPLAY__OPERATIONS.textContent += operator + secondOperand;
 }
 
 function addSelectedOperatorBeforeCallingOperate(index){
@@ -140,11 +144,17 @@ function callOperateWhenPressedOnEqualBtn(){
         pressedEqual = true;
     }
     else{
+        console.log('here');
         DISPLAY__RESULT.textContent = `${operate(+firstOperand, +secondOperand, operator)}`;
+        console.log(DISPLAY__RESULT.textContent);
         if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
         if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
+        console.log(firstOperand);
         firstOperand = DISPLAY__RESULT.textContent;
+        console.log(firstOperand);
+        console.log(DISPLAY__OPERATIONS.textContent);
         DISPLAY__OPERATIONS.textContent = DISPLAY__RESULT.textContent;
+        console.log(DISPLAY__OPERATIONS.textContent);
         secondOperand = '';
         operator = '';
         pressedEqual = true;
@@ -188,15 +198,18 @@ document.addEventListener('keydown', (event) => {
 
     // Allow only numbers, operators, Enter, Backspace, and Escape
     if (/[\d+\-*/]/.test(key)) {
-        DISPLAY__OPERATIONS.textContent += key
+        if(DISPLAY__OPERATIONS.textContent.startsWith('0')) DISPLAY__OPERATIONS.textContent = key;
+        else DISPLAY__OPERATIONS.textContent += key;
         if (key === '+' || key === '-' || key === '/' 
             || key === '*') {
                 firstOperand = DISPLAY__OPERATIONS.textContent.slice(0, DISPLAY__OPERATIONS.textContent.length - 1);
                 operator = key;
             }
         else {
-           if(operator !== '')
-            secondOperand = DISPLAY__OPERATIONS.textContent.slice(DISPLAY__OPERATIONS.textContent.indexOf(operator) + 1);
+           if(operator !== ''){
+            secondOperand = DISPLAY__OPERATIONS.textContent.slice(DISPLAY__OPERATIONS.textContent.indexOf(operator) + 1).replace(/^0+(?=\d)/, "");
+            DISPLAY__OPERATIONS.textContent = firstOperand + operator + secondOperand;
+           }
         }
     } else if (key === "Enter") {
         if(operator === '/' || operator === '*'){
@@ -204,21 +217,24 @@ document.addEventListener('keydown', (event) => {
                 const RESULT_MUL = `${(firstOperand * secondOperand)}`;
                 DISPLAY__RESULT.textContent = RESULT_MUL;
                 DISPLAY__OPERATIONS.textContent = RESULT_MUL;
+                if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
+                if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
             }
             else {
                 const RESULT_DIV = `${(firstOperand / secondOperand)}`;
                 DISPLAY__RESULT.textContent = RESULT_DIV;
                 DISPLAY__OPERATIONS.textContent = RESULT_DIV;
+                if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
+                if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
             }
         }
         else callOperateWhenPressedOnEqualBtn();
     } else if (key === "Backspace") {
         const SAVE = DISPLAY__OPERATIONS.textContent.slice(0, -1);
-        DISPLAY__OPERATIONS.textContent = SAVE;
+        DISPLAY__OPERATIONS.textContent = SAVE.length === 0? '0' : SAVE;
         if(!(key === '+' || key === '-' || key === '/' 
             || key === '*')) firstOperand = SAVE;
         else {
-            console.log('here');
             let op;
             let i;
             OPERATORS.map((operand, index) =>{
