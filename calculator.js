@@ -53,25 +53,25 @@ BTN__CLEAR.addEventListener('click', function() {
 function operate (firstOperand, secondOperand, operator){
     switch(operator){
         case '+':
-            const RESULT_ADD = `${eval(firstOperand + secondOperand)}`;
+            const RESULT_ADD = `${(firstOperand + secondOperand)}`;
             if(RESULT_ADD.length > 10) {
                 if(+RESULT_ADD < 0) return Math.floor(+RESULT_ADD);
                 else return Number((+RESULT_ADD).toFixed(10));
             };
             return RESULT_ADD;
         case '-':
-            const RESULT_SUB = `${eval(firstOperand - secondOperand)}`;
+            const RESULT_SUB = `${(firstOperand - secondOperand)}`;
             if(RESULT_SUB.length > 10) {
                 if(+RESULT_SUB < 0) return Math.floor(+RESULT_SUB);
                 else return Number((+RESULT_SUB).toFixed(10));
             };
             return RESULT_SUB;
         case '×' || '*':
-            const RESULT_MUL = `${eval(firstOperand * secondOperand)}`;
+            const RESULT_MUL = `${(firstOperand * secondOperand)}`;
             if(RESULT_MUL.length > 10) return Number((+RESULT_MUL).toFixed(10));
             return RESULT_MUL;
         case '÷' || '/':
-            const RESULT = `${eval(firstOperand / secondOperand)}`;
+            const RESULT = `${(firstOperand / secondOperand)}`;
             if(RESULT.length > 10) return Number((+RESULT).toFixed(10));
             return RESULT;
     }   
