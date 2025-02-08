@@ -122,6 +122,8 @@ function addSelectedOperatorBeforeCallingOperate(index){
     else{
         pressedEqual = false;
         DISPLAY__RESULT.textContent = `${operate(+firstOperand, +secondOperand, operator)}`;
+        if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
+        if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
         firstOperand = `${operate(+firstOperand, +secondOperand, operator)}`;
         secondOperand = '';
         operator = OPERATORS[index].textContent;
@@ -136,6 +138,8 @@ function callOperateWhenPressedOnEqualBtn(){
     }
     else{
         DISPLAY__RESULT.textContent = `${operate(+firstOperand, +secondOperand, operator)}`;
+        if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
+        if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
         firstOperand = DISPLAY__RESULT.textContent;
         secondOperand = '';
         operator = '';
