@@ -177,3 +177,31 @@ CONTAINER.addEventListener('click', function (e) {
         }
     }
 });
+
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+    let condition = (DISPLAY__OPERATIONS.textContent.includes('+') || DISPLAY__OPERATIONS.textContent.includes('-') 
+    || DISPLAY__OPERATIONS.textContent.includes('*') || DISPLAY__OPERATIONS.textContent.includes('/'));
+    let choosenOperator;
+
+    // Allow only numbers, operators, Enter, Backspace, and Escape
+    if (/[\d+\-*/]/.test(key)) {
+        DISPLAY__OPERATIONS.textContent += key
+        if (!condition) firstOperand = DISPLAY__OPERATIONS.textContent;
+    } else if (key === "Enter") {
+        callOperateWhenPressedOnEqualBtn();
+    } else if (key === "Backspace") {
+        DISPLAY__OPERATIONS.textContent = DISPLAY__OPERATIONS.textContent.slice(0, -1);
+    } else if (key === "Escape") {
+        DISPLAY__RESULT.textContent = '0';
+        DISPLAY__OPERATIONS.textContent = '0';  
+        BTN__DECIMAL.disabled = false; 
+        firstOperand = '';
+        secondOperand = '';
+        operator = '';
+    } 
+    // Prevent function keys (F1-F12) and other unwanted keys
+    else if (event.key.startsWith("F") || event.ctrlKey || event.altKey) {
+        event.preventDefault();
+    }
+  });
