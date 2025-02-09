@@ -67,12 +67,10 @@ function operate (firstOperand, secondOperand, operator){
             };
             return RESULT_SUB;
         case '×' || '*':
-            console.log('here');
             const RESULT_MUL = `${(firstOperand * secondOperand)}`;
             if(RESULT_MUL.length > 10) return Number((+RESULT_MUL).toFixed(10));
             return RESULT_MUL;
         case '÷' || '/':
-            console.log('here');
             const RESULT = `${(firstOperand / secondOperand)}`;
             if(RESULT.length > 10) return Number((+RESULT).toFixed(10));
             return RESULT;
@@ -144,17 +142,11 @@ function callOperateWhenPressedOnEqualBtn(){
         pressedEqual = true;
     }
     else{
-        console.log('here');
         DISPLAY__RESULT.textContent = `${operate(+firstOperand, +secondOperand, operator)}`;
-        console.log(DISPLAY__RESULT.textContent);
         if(DISPLAY__RESULT.textContent.length >=10) DISPLAY__RESULT.style.fontSize = '1.5em'
         if(DISPLAY__RESULT.textContent.length >=15) DISPLAY__RESULT.style.fontSize = '1.2em'
-        console.log(firstOperand);
         firstOperand = DISPLAY__RESULT.textContent;
-        console.log(firstOperand);
-        console.log(DISPLAY__OPERATIONS.textContent);
         DISPLAY__OPERATIONS.textContent = DISPLAY__RESULT.textContent;
-        console.log(DISPLAY__OPERATIONS.textContent);
         secondOperand = '';
         operator = '';
         pressedEqual = true;
